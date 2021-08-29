@@ -1,0 +1,53 @@
+---
+title: "Loading Data into DataFrame"
+author: "Nnaemeka Okereafor"
+date: "8/28/2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+
+How One High-Risk Community In Rural South Carolina Is Bracing For COVID-19 article relates to an annual survey on the effects of COVID-19 conducted on more than 400,000 Americans. The data reviews the number of people who are at high risk of becoming seriously ill from COVID-19 per ICU bed in each metropolitan, micropolitan or metropolitan area. See <https://github.com/fivethirtyeight/data/tree/master/covid-geography>.
+
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(tibble)
+covid_df<- read.csv(file="https://raw.githubusercontent.com/nnaemeka-git/global-datasets/main/mmsa-icu-beds.csv")
+
+select_val <- covid_df %>% 
+  select(MMSA,total_percent_at_risk,total_at_risk) %>%
+  rename("Total % At Risk"=total_percent_at_risk,"Total At Risk"= total_at_risk)
+
+```
+
+### Snapshot of Original dataset
+
+mmsa-icu-beds.csv dataset has 136 observations and 7 variables. The icu_beds and hospital variables are discrete while the other variables are continuous with the exception of MMSA variable which represents the name of the metropolitan, micropolitan or metropolitan division available in the CDC’s BRFSS. See <https://github.com/nnaemeka-git/global-datasets/blob/main/mmsa-icu-beds.csv>.
+
+```{r, echo = FALSE}
+tibble(covid_df)
+
+```
+
+
+### Snapshot of Seleted columns
+The subset dataset reviews metropolitan area, micropolitan area or metropolitan division with the associated percent of individuals in that area that are at high risk of becoming seriously ill from COVID-19 and the total number of high risk individuals in the area per CDC’s BRFSS.
+
+```{r, echo = FALSE}
+
+tibble(select_val)
+
+```
+
+* ### Conclusion
+     + Exploratory data analysis can be carried out to verify the descriptive statistics for every variable of the data
+     + The data can be grouped by metropolitan, micropolitan and metropolitan areas to know the total vulnerable people by area
+     + Correlation within variables can be calculated to determine the relationship between the variables
+
